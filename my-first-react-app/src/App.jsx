@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Search from "./components/Search";
 import Spinner from "./components/Spinner";
+import MovieCard from "./components/MovieCard";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 
@@ -53,36 +54,33 @@ const App = () => {
   return (
     <main>
       <div className="pattern" />
-      <div className="wrapper" />
-      <header>
-        <img src="./hero.png" alt="Hero Banner" />
-        <h1>
-          Find <span className="text-gradient">Movies</span> You'll Enjoy
-          Without the Hassle
-        </h1>
-        {/* setSearchTerm is passed as function declaration so it won't get called*/}
-        <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      </header>
-      <section className="all-movies">
-        <h2 className="mt-[40px]">All Movies</h2>
-        {/* {errorMessage && <p className="text-red-500">{errorMessage}</p>} */}
+      <div className="wrapper">
+        <header>
+          <img src="./hero.png" alt="Hero Banner" />
+          <h1>
+            Find <span className="text-gradient">Movies</span> You'll Enjoy
+            Without the Hassle
+          </h1>
+          {/* setSearchTerm is passed as function declaration so it won't get called*/}
+          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        </header>
+        <section className="all-movies">
+          <h2 className="mt-[40px]">All Movies</h2>
+          {/* {errorMessage && <p className="text-red-500">{errorMessage}</p>} */}
 
-        {isLoading ? (
-          <p className="text-white">
-            <Spinner />
-          </p>
-        ) : errorMessage ? (
-          <p className="text-red-500">{errorMessage}</p>
-        ) : (
-          <ul>
-            {movieList.map((movie) => (
-              <p key={movie.id} className="text-white">
-                {movie.title}
-              </p>
-            ))}
-          </ul>
-        )}
-      </section>
+          {isLoading ? (
+            <div className="text-white">{<Spinner />}</div>
+          ) : errorMessage ? (
+            <p className="text-red-500">{errorMessage}</p>
+          ) : (
+            <ul>
+              {movieList.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </ul>
+          )}
+        </section>
+      </div>
     </main>
   );
 };
